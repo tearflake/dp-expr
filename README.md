@@ -170,8 +170,8 @@ Since S-Expr and DP-Expr forms may be made compatible, the future work may inclu
 
 ## Resources
 
-* [DP-Expr playground](tearflake.github.io/DP-Expr/playground/)
-* [DP-Expr pseudocode](./src/DP-Expr.pseudo)
+* [DP-Expr playground](tearflake.github.io/dp-expr/playground/)
+* [DP-Expr pseudocode](./src/dp-expr.pseudo)
 
 ## License
 
