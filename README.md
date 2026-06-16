@@ -8,7 +8,7 @@ S-Expr is a brilliant format for representing data, but it has its quirks when a
 
 The possible solution that meets these constraints may come in a form of significant number of prefixed dots to tokens, not involving parenthesis at all. We name this format the "Depth Prefix Expression" (DP-Expr). S-Exprs and DP-Exprs are interchangeable without exception, meaning that each S-Expr can be expressed by a DP-Expr and each DP-Expr can be expressed by an S-Expr. Comparing to S-Expr format, DP-Expr doesn't promise a shorter code, but using the right kind of indentation and newlines, it may exclude dealing with endless streams of parenthesis, but at the expense of stating explicit depth of each atom.
 
-DP-Expr is not an attempt to replace S-Exprs everywhere. It is an alternative tree notation optimized for vertically presented hierarchies while being fully interchangeable to S-Expr format.
+DP-Expr is not an attempt to replace S-Exprs everywhere. It is an alternative tree notation optimized for vertically presented hierarchies while being fully interchangeable to and from S-Expr format.
 
 ## Overview
 
