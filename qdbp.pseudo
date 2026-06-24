@@ -1,0 +1,89 @@
+token: {depth: integer, val: string}
+
+function qdbc(str: string): string
+    [result, pos] = convert(str, 0, 0)
+    return result.join(" ");
+
+function convert(str: string, pos: integer, rec: integer): [string[], integer]
+    result = [];
+    first = true;
+    [token, currPos] = nextToken(str, pos);
+    while token != null and token.val != ")"
+        currDepth = token.depth;
+        value = null;
+        if token.val == "("
+            [value, currPos] = convert(str, currPos, rec + 1);
+        
+        else if token.val != ")"
+            value = token.val;
+
+        [token, currPos] = nextToken(str, currPos);
+        nextDepth = (token == null or token.val == ")" ? 0 : token.depth)
+        
+        if rec == 0 and not first and currDepth == 0
+            Error(`Only one top level expression allowed`);
+        
+        if first and currDepth > 0
+            Error(`First expression depth has to be 0`);
+            
+        if nextDepth > currDepth + 1
+            Error(`Only one depth level shift at the time allowed`)
+
+        if nextDepth > currDepth
+            repeat nextDepth - currDepth times
+                result.push("(");
+        
+        if value != null
+            if not value is array
+                result.push(value);
+                
+            else
+                result.push("(");
+                for e in value
+                    result.push(e);
+
+                result.push(")");
+        
+        if nextDepth < currDepth
+            repeat currDepth - nextDepth times
+                result.push(")");
+
+        first = false;
+    
+    if rec > 0 and token == null
+        Error(`Unexpected end of file`);
+        
+    if rec == 0 and token != null
+        Error("Unexpected characters");
+
+    if rec == 0 and result.length == 0
+        Error(`Empty file`);
+    
+    return [result, currPos];
+
+function nextToken(str: string, start: integer): [token, integer]
+    while start < str.length and str.charAt(start) in "\n\r\t "
+        start++;
+    
+    if start >= str.length
+        return [null, start];
+    
+    end = start;
+    while end < str.length and str.charAt(end) == "."
+        end++;
+    
+    depth = end - start;
+    while end < str.length and str.charAt(end) not in "\n\r\t(). "
+        end++;
+    
+    if depth == end - start and end < str.length and str.charAt(end) == "("
+        return [{depth: depth, val: "("}, end + 1];
+
+    if depth > 0 and start + depth == end
+        Error(`Missing atom or opening paren after depth marker`);
+
+    if depth == end - start and depth == 0 and end < str.length and str.charAt(end) == ")"
+        return [{depth: 0, val: ")"}, end + 1];
+    
+    return [{depth: depth, val: str.substring(start + depth, end)}, end];
+
