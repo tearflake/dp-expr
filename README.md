@@ -71,7 +71,7 @@ Resources:
 * [Informal Outline](docs/informal-outline.md)
 * [Formal Specification](docs/formal-spec.md)
 * [Online playground](https://tearflake.github.io/qdbp/playground)
-* Compiler Installation Instructions `// under conctruction //`
+* [Use Instructions](docs/use-instructions.md)
 
 ---
 
