@@ -1,3 +1,7 @@
+```
+// under construction //`
+```
+
 # QDBP-Compiler
 
 **QDBP (Quested-Depth/Boundary-Perceived Expressions)** is a tree notation framework that allows hierarchical structures to be written using either:
@@ -67,7 +71,7 @@ Resources:
 * [Informal Outline](docs/informal-outline.md)
 * [Formal Specification](docs/formal-spec.md)
 * [Online playground](https://tearflake.github.io/qdbp/playground)
-* Compiler Installation Instructions
+* Compiler Installation Instructions `// under conctruction //`
 
 ---
 
@@ -78,4 +82,8 @@ QDBP is experimental.
 The project explores whether boundary-oriented and depth-oriented tree representations can coexist as complementary views of the same underlying structure.
 
 Feedback, criticism, and alternative interpretations are welcome.
+
+```
+// under construction //`
+```
 
