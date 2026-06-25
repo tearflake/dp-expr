@@ -22,7 +22,7 @@ Traditional S-expressions emphasize boundaries.
 
 Indentation-based systems emphasize depth.
 
-QDBP treats both as first-class views of the same tree.
+QDBP treats both as first-class parts of the same tree.
 
 ---
 
@@ -47,15 +47,15 @@ Equivalent QDBP representation:
 
 ```text
 package
-.   shapes
+    .shapes
 
-.   module
-.   .   math
+    .module
+        ..math
 
-.   .   fn
-.   .   .   square
-.   .   .   (lambda (x)
-                (* x x))
+        ..fn
+            ...square
+            ...(lambda (x)
+                 (* x x))
 ```
 
 Both forms describe exactly the same tree.

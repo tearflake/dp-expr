@@ -71,32 +71,32 @@ QDBP source:
 
 ```text
 package
-.   shapes
+    .shapes
 
-.   module
-.   .   math
+    .module
+        ..math
 
-.   .   fn
-.   .   .   square
-.   .   .   (lambda (x)
+        ..fn
+            ...square
+            ...(lambda (x)
                 (* x x))
-            
-.   .   fn
-.   .   .   distance
-.   .   .   (lambda (x y)
-                (sqrt (+ (* x x) (* y y))))
-            
-.   module
-.   .   square
         
-.   .   fn
-.   .   .   area
-.   .   .   (lambda (a)
+        ..fn
+        ...distance
+            ...(lambda (x y)
+                (sqrt (+ (* x x) (* y y))))
+    
+    .module
+        ..square
+        
+        ..fn
+            ...area
+            ...(lambda (a)
                 (math/square a))
-            
-.   .   fn
-.   .   .   diagonal
-.   .   .   (lambda (a)
+        
+        ..fn
+            ...diagonal
+            ...(lambda (a)
                 (math/distance a a))
 ```
 

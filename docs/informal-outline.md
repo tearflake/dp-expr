@@ -92,13 +92,13 @@ QD expressions describe hierarchy through explicit depth levels.
 
 ```text
 package
-.   shapes
+    .shapes
 
-.   module
-.   .   math
+    .module
+        ..math
 
-.   .   fn
-.   .   .   square
+        ..fn
+            ...square
 ```
 
 A sequence of leading dots specifies the depth level associated with the current element.
@@ -137,12 +137,12 @@ These two expressions are equivalent:
 
 ```text
 add
-.   mul
-.   .   2
-.   .   3
-.   mul
-.   .   4
-.   .   5
+    .mul
+        ..2
+        ..3
+    .mul
+        ..4
+        ..5
 ```
 
 ---
@@ -157,19 +157,19 @@ For example:
 
 ```text
 package
-.   shapes
+    .shapes
 
-.   module
-.   .   math
+    .module
+        ..math
 
-.   .   fn
-.   .   .   square
-.   .   .   (lambda (x)
+        ..fn
+            ...square
+            ...(lambda (x)
                 (* x x))
 
-.   .   fn
-.   .   .   distance
-.   .   .   (lambda (x y)
+        ..fn
+            ...distance
+            ...(lambda (x y)
                 (sqrt (+ (* x x) (* y y))))
 ```
 
@@ -231,14 +231,14 @@ Example:
 
 ```text
 server
-.   database
-.   .   postgres
-.   .   localhost
-.   .   5432
+    .database
+        ..postgres
+        ..localhost
+        ..5432
 
-.   cache
-.   .   redis
-.   .   6379
+    .cache
+        ..redis
+        ..6379
 ```
 
 ---

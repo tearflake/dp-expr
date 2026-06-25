@@ -175,48 +175,48 @@ var QDBP = (
             // strings (single, double, or repeated)
             let ch = input.charAt(pos);
             if (ch === '"' || ch === "'") {
-              let quoteChar = ch;
-              let count = 0;
-              while (input.charAt(pos + count) === quoteChar) count++;
-              pos += count;
-              let escaped = false;
-              if (count === 1 || count % 2 === 0) {
-                let value = "";
-                let success = false;
-                while (pos < input.length) {
-                  if (input[pos] === '\n') {
-                    let c = getCoords (input, tmpPos);
-                    throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
-                  }
-                  
-                  if(!escaped) {
-                      if(input[pos] == quoteChar) {
-                        success = true;
-                        pos++;
-                        break;
-                      }
-                      
-                      if (input[pos] === '\\')
-                        escaped=true;
-                  }
-                  else
-                    escaped = false;
+                let quoteChar = ch;
+                let count = 0;
+                while (input.charAt(pos + count) === quoteChar) count++;
+                pos += count;
+                let escaped = false;
+                if (count === 1 || count % 2 === 0) {
+                    let value = "";
+                    let success = false;
+                    while (pos < input.length) {
+                        if (input[pos] === '\n') {
+                            let c = getCoords (input, tmpPos);
+                            throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
+                        }
 
-                  value += input[pos];
-                  pos++;
+                        if(!escaped) {
+                            if(input[pos] == quoteChar) {
+                                success = true;
+                                pos++;
+                                break;
+                            }
+
+                            if (input[pos] === '\\')
+                                escaped=true;
+                        }
+                        else
+                            escaped = false;
+
+                        value += input[pos];
+                        pos++;
+                    }
+
+                    if (!success) {
+                        let c = getCoords (input, tmpPos);
+                        throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
+                    }
+
+                    return [JSON.stringify(value), value.length + 2];
+                    
+                } else {
+                    let c = getCoords (input, tmpPos);
+                    throw new Error(`Multiline strings not supported\nat ${"(" + c.row + ", " + c.column + ")"}`);
                 }
-                
-                if (!success) {
-                  let c = getCoords (input, tmpPos);
-                  throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
-                }
-                
-                return [JSON.stringify(value), value.length + 2];
-                
-              } else {
-                let c = getCoords (input, tmpPos);
-                throw new Error(`Multiline strings not supported\nat ${"(" + c.row + ", " + c.column + ")"}`);
-              }
             }
         }
         
