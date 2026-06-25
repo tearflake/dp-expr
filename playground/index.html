@@ -209,7 +209,7 @@ body::selection {
 
                     var options = {
                         font: "2.25em monospace",
-                        tabWidth: 4,
+                        tabWidth: 2,
                         colorCaret: "rgb(0,0,0,0)",
                         colorText: "rgb(255,255,255)",
                         colorTextBack: "rgb(0,0,0)",
@@ -401,46 +401,6 @@ package
 `
 );
 
-        input1.setValue(
-`
-package
-. shapes
-
-. module
-. . math
-
-. . fn
-. . . square
-. . . (lambda (x)
-        (* x x))
-            
-. . fn
-. . . distance
-. . . (lambda (x y)
-        (sqrt (+ (* x x) (* y y))))
-            
-. . export
-. . . square
-. . . distance
-        
-. module
-. . square
-        
-. . fn
-. . . area
-. . . (lambda (a)
-        (math/square a))
-            
-. . fn
-. . . diagonal
-. . . (lambda (a)
-        (math/distance a a))
-            
-. . export
-. . . area
-. . . diagonal
-`);
-            
         output1.value = "";
         document.getElementById("tm").innerHTML = "";
         setTimeout(function() {

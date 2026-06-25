@@ -109,15 +109,20 @@ var QDBP = (
             }
             
             start = end;
+            if (start < str.length && str.charAt(start) === '"' || str.charAt(start) === "'") {
+                let [value, len] = parseString(str, start);
+                return [{depth: depth, val: value}, start + len];
+            }
+
             while (end < str.length && "\n\r\t(). ".indexOf (str.charAt(end)) === -1) {
                 end++;
             }
             
-            if (end < str.length && str.charAt(end) === "(") {
+            if (start == end && end < str.length && str.charAt(end) === "(") {
                 return [{depth: depth, val: "("}, end + 1];
             }
 
-            if (end < str.length && str.charAt(end) == ")") {
+            if (start == end && end < str.length && str.charAt(end) == ")") {
                 if(depth === 0) {
                     return [{depth: 0, val: ")"}, end + 1];
                 }
@@ -164,7 +169,57 @@ var QDBP = (
             let c = getCoords (text, pos + 1);
             return "(" + c.row + ", " + c.column + ")";
         }
+        
+        function parseString (input, pos) {
+            let tmpPos = pos;
+            // strings (single, double, or repeated)
+            let ch = input.charAt(pos);
+            if (ch === '"' || ch === "'") {
+              let quoteChar = ch;
+              let count = 0;
+              while (input.charAt(pos + count) === quoteChar) count++;
+              pos += count;
+              let escaped = false;
+              if (count === 1 || count % 2 === 0) {
+                let value = "";
+                let success = false;
+                while (pos < input.length) {
+                  if (input[pos] === '\n') {
+                    let c = getCoords (input, tmpPos);
+                    throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
+                  }
+                  
+                  if(!escaped) {
+                      if(input[pos] == quoteChar) {
+                        success = true;
+                        pos++;
+                        break;
+                      }
+                      
+                      if (input[pos] === '\\')
+                        escaped=true;
+                  }
+                  else
+                    escaped = false;
 
+                  value += input[pos];
+                  pos++;
+                }
+                
+                if (!success) {
+                  let c = getCoords (input, tmpPos);
+                  throw new Error(`String not terminated\nat ${"(" + c.row + ", " + c.column + ")"}`);
+                }
+                
+                return [JSON.stringify(value), value.length + 2];
+                
+              } else {
+                let c = getCoords (input, tmpPos);
+                throw new Error(`Multiline strings not supported\nat ${"(" + c.row + ", " + c.column + ")"}`);
+              }
+            }
+        }
+        
         return {
             compile: compile
         }

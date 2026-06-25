@@ -80,10 +80,10 @@ function nextToken(str: string, start: integer): [token, integer]
     while end < str.length and str.charAt(end) not in "\n\r\t(). "
         end++;
     
-    if end < str.length and str.charAt(end) == "("
+    if start == end and end < str.length and str.charAt(end) == "("
         return [{depth: depth, val: "("}, end + 1];
 
-    if depth == 0 and end < str.length and str.charAt(end) == ")"
+    if start == end and end < str.length and str.charAt(end) == ")"
         if depth == 0
             return [{depth: 0, val: ")"}, end + 1];
         

@@ -46,17 +46,33 @@ var SExpr = (
                 advance();
                 let value = "";
                 let success = false;
+                let escaped = false;
                 while (i < input.length) {
                   if (input[i] === '\n')
                     return {
                       err: "String not terminated",
                       pos: {x: startCol - 1, y: startLine - 1}
                     };
+
+                  if(!escaped) {
+                      if(input[i] == quoteChar) {
+                        success = true;
+                        advance();
+                        break;
+                      }
+                      
+                      if (input[i] === '\\')
+                        escaped=true;
+                  }
+                  else
+                    escaped = false;
+                  /*
                   if (input[i - 1] !== '\\' && input.startsWith(quoteChar, i)) {
                     success = true;
                     advance();
                     break;
                   }
+                  */
                   value += peek();
                   advance();
                 }
