@@ -114,7 +114,7 @@ var QDBP = (
                 return [{depth: depth, val: value}, start + len];
             }
 
-            while (end < str.length && "\n\r\t(). ".indexOf (str.charAt(end)) === -1) {
+            while (end < str.length && "\n\r\t\"(). ".indexOf (str.charAt(end)) === -1) {
                 end++;
             }
             
