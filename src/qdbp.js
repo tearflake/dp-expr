@@ -30,7 +30,7 @@ var QDBP = (
                     throw new Error(`Only one top level expression allowed\nat ${errBack (str, currPos)}`);
                 
                 if (first && currDepth > 0)
-                    throw new Error(`First expression depth has to be 0\nat ${errBack (str, currPos)}`);
+                    throw new Error(`First expression depth in sequence has to be 0\nat ${errBack (str, currPos)}`);
                     
                 let value = null;
                 if (token.val === "(") {
@@ -42,7 +42,6 @@ var QDBP = (
                 
                 [token, currPos] = nextToken(str, currPos);
                 let nextDepth = (token === null || token.val === ")" ? 0 : token.depth)
-                
                 if (nextDepth > currDepth + 1)
                     throw new Error(`Only one level depth shift at the time allowed\nat ${errBack (str, currPos)}`)
                 
@@ -100,29 +99,35 @@ var QDBP = (
             }
             
             let end = start;
+            let depth = 0
             while (end < str.length && str.charAt(end) === ".") {
                 end++;
+                depth++;
+                while (end < str.length && "\n\r\t ".indexOf (str.charAt(end)) > -1) {
+                    end++;
+                }
             }
             
-            let depth = end - start;
+            start = end;
             while (end < str.length && "\n\r\t(). ".indexOf (str.charAt(end)) === -1) {
                 end++;
             }
             
-            if (depth === end - start && end < str.length && str.charAt(end) === "(") {
+            if (end < str.length && str.charAt(end) === "(") {
                 return [{depth: depth, val: "("}, end + 1];
             }
 
-            if (depth > 0 && start + depth === end){
-                let c = getCoords (str, end);
-                throw new Error(`Missing atom or opening paren after depth marker\nat ${"(" + c.row + ", " + c.column + ")"}`);
-            }
-
-            if (depth === end - start && depth === 0 && end < str.length && str.charAt(end) == ")") {
-                return [{depth: 0, val: ")"}, end + 1];
+            if (end < str.length && str.charAt(end) == ")") {
+                if(depth === 0) {
+                    return [{depth: 0, val: ")"}, end + 1];
+                }
+                else {
+                    let c = getCoords (str, end);
+                    throw new Error(`Missing atom or opening paren after depth marker\nat ${"(" + c.row + ", " + c.column + ")"}`);
+                }
             }
             
-            return [{depth: depth, val: str.substring(start + depth, end)}, end];
+            return [{depth: depth, val: str.substring(start, end)}, end];
         }
         
         function getCoords (text, offset) {
@@ -156,10 +161,6 @@ var QDBP = (
                     braces++;
             }
             
-            pos--;
-            while (".".indexOf (text.charAt(pos)) > -1)
-                pos--;
-
             let c = getCoords (text, pos + 1);
             return "(" + c.row + ", " + c.column + ")";
         }

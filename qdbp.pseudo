@@ -69,21 +69,26 @@ function nextToken(str: string, start: integer): [token, integer]
         return [null, start];
     
     end = start;
+    depth = 0;
     while end < str.length and str.charAt(end) == "."
         end++;
+        depth++;
+        while end < str.length and str.charAt(end) in "\n\r\t. "
+            end++;
     
-    depth = end - start;
+    start = end;
     while end < str.length and str.charAt(end) not in "\n\r\t(). "
         end++;
     
-    if depth == end - start and end < str.length and str.charAt(end) == "("
+    if end < str.length and str.charAt(end) == "("
         return [{depth: depth, val: "("}, end + 1];
 
-    if depth > 0 and start + depth == end
-        Error(`Missing atom or opening paren after depth marker`);
-
-    if depth == end - start and depth == 0 and end < str.length and str.charAt(end) == ")"
-        return [{depth: 0, val: ")"}, end + 1];
+    if depth == 0 and end < str.length and str.charAt(end) == ")"
+        if depth == 0
+            return [{depth: 0, val: ")"}, end + 1];
+        
+        else
+            Error(`Missing atom or opening paren after depth marker`);
     
-    return [{depth: depth, val: str.substring(start + depth, end)}, end];
+    return [{depth: depth, val: str.substring(start, end)}, end];
 

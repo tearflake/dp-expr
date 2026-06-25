@@ -8,5 +8,6 @@
 - v0.1.x
     - renamed DP to QDBP
     - QD may embed BP, BP may embed QD
-    - playground experiment
+    - added playground experiment
+    - optional whitespace between dots
 

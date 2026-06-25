@@ -4,7 +4,7 @@
 
 # QDBP Compiler
 
-**QDBP (Quested-Depth/Boundary-Perceived Expressions)** is a tree notation framework that allows hierarchical structures to be written using either:
+**QDBP (Quested-Depth/Boundary-Packed Expressions)** is a tree notation framework that allows hierarchical structures to be written using either:
 
 * **explicit boundaries** (ordinary S-expressions)
 * **explicit depth relationships** (depth-annotated expressions)
@@ -47,14 +47,14 @@ Equivalent QDBP representation:
 
 ```text
 package
-    .shapes
+.   shapes
 
-    .module
-        ..math
+.   module
+.   .   math
 
-        ..fn
-            ...square
-            ...(lambda (x)
+.   .   fn
+.   .   .   square
+.   .   .   (lambda (x)
                 (* x x))
 ```
 
