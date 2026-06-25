@@ -329,6 +329,9 @@ var edit = function (node, options) {
         var l = (-input.scrollLeft + getCharacterWidth() * (pos.column - 1) + globalMagn * 3);
         var t = (-input.scrollTop + globalMagn * getCharacterHeight() * ((pos.row - 1)) + globalMagn * 3 + globalMagn * 3);
         
+        if (l < input.scrollLeft)
+            input.scrollLeft = l;
+            
         var ww = input.clientWidth - l;
         document.getElementById('caret').style.width = Math.min (globalMagn * 3, ww) + "px";
         var hh = input.clientHeight - t;

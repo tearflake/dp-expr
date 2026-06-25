@@ -165,7 +165,7 @@ body::selection {
 
 </style>
 </head>
-<body style="font-family: monospace;/*Times New Roman, Georgia, Garamond;*/">
+<body style="font-family: monospace; font-size: 1.1875em;/*Times New Roman, Georgia, Garamond;*/">
 <script src="edit.js"></script>
 <script src="../qdbp.js"></script>
 <div class="overlay"></div>
@@ -208,7 +208,7 @@ body::selection {
 
                     var options = {
                         font: "2.25em monospace",
-                        tabWidth: 2,
+                        tabWidth: 3,
                         colorCaret: "rgb(0,0,0,0)",
                         colorText: "rgb(255,255,255)",
                         colorTextBack: "rgb(0,0,0)",
@@ -280,7 +280,7 @@ body::selection {
         <td align="left">
         </td>
         <td align="right">
-            <font style="font-family: sans-serif; font-size:2.5em;">
+            <font style="font-family: sans-serif; font-size:2em;">
                 <b class="button">
                 <a id="bck2" href="https://github.com/tearflake" target="new" style="text-decoration: none;">
                 <span style="padding-left: 1em; padding-right: 1em;">
@@ -407,25 +407,21 @@ body::selection {
 
         input1.setValue (
 `
-(project
-    Test-QDBP
+package
+   .shapes
 
-    package
-        .shapes
+   .module
+      ..math
 
-        .module
-            ..math
+      ..fn
+         ...square
+         ...(lambda (x)
+             (* x x))
 
-            ..fn
-                ...square
-                ...(lambda (x)
-                    (* x x))
-
-            ..fn
-                ...distance
-                ...(lambda (x y)
-                    (sqrt (+ (* x x) (* y y))))
-)
+      ..fn
+         ...distance
+         ...(lambda (x y)
+             (sqrt (+ (* x x) (* y y))))
 `
         );
 
@@ -489,13 +485,13 @@ body::selection {
     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     var isEpiphany = /Epiphany/.test(navigator.userAgent) && /AppleWebKit/.test(navigator.userAgent);
     if (isFirefox) {
-        document.body.innerHTML = "Firefox browser not supported for playground."
+        document.body.innerHTML = "Firefox browser not supported for the playground."
     }
     if (isSafari) {
-        document.body.innerHTML = "Safari browser not supported for playground."
+        document.body.innerHTML = "Safari browser not supported for the playground."
     }
     if (isEpiphany) {
-        document.body.innerHTML = "Epiphany browser not supported for playground."
+        document.body.innerHTML = "Epiphany browser not supported for the playground."
     }
 </script>
 </body>
