@@ -57,10 +57,8 @@ var edit = function (node, options) {
     container.style.height = "inherit";
     
     function handleScroll () {
-        setTimeout(()=>{
-            updateCaret();
-            setSliders();
-        }, 0);
+        updateCaret();
+        setSliders();
     }
     
     function handleInput () {
@@ -408,7 +406,7 @@ var edit = function (node, options) {
     function getCharacterHeight() {
         const font = getComputedStyle(input).font;
         
-        return parseFloat(font) + 0.1;
+        return parseFloat(font);
     }
     
     var caretOn = true;
@@ -436,8 +434,8 @@ var edit = function (node, options) {
     function updateCaret () {
         let globalMagn = 1;
         var pos = getCoords(input.value, input.selectionStart);
-        var l = (-input.scrollLeft + getCharacterWidth() * (pos.col - 1) + globalMagn * 3 + globalMagn * 3);
-        var t = (-input.scrollTop + globalMagn * getCharacterHeight() * ((pos.row - 1)) + globalMagn * 3 + globalMagn * 3);
+        var l = (-input.scrollLeft + globalMagn * getCharacterWidth() * (pos.col - 1) + globalMagn * 3 + globalMagn * 3);
+        var t = (-input.scrollTop + globalMagn * getCharacterHeight() * (pos.row - 1) + globalMagn * 3 + globalMagn * 3);
         
         var ww = input.clientWidth - l;
         document.getElementById(`caret${rndid}`).style.width = Math.min (globalMagn * 3, ww) + "px";
